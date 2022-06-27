@@ -71,10 +71,13 @@
     "yarn": "^1.22.x"
   },
   "lint-staged": {
-    "*.{json,*rc}": [
+    "*.json": [
       "prettier --write"
     ],
-    "*.{js,jsx,ts,tsx}": [
+    ".*rc": [
+      "prettier --write"
+    ],
+    "src/*.{js,jsx,ts,tsx}": [
       "eslint --cache --fix"
     ]
   },
