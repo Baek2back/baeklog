@@ -1,26 +1,26 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { ThemeProvider } from "@emotion/react";
+import { AppRoutes } from "./routes";
+import { Provider as ReduxStoreProvider } from "react-redux";
+import { store } from "@/store";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface AppProviderProps {
+  children: React.ReactNode;
 }
+
+const AppProvider = ({ children }: AppProviderProps) => {
+  return (
+    <ReduxStoreProvider store={store}>
+      <ThemeProvider theme={{}}>{children}</ThemeProvider>
+    </ReduxStoreProvider>
+  );
+};
+
+const App = () => {
+  return (
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
+  );
+};
 
 export default App;
