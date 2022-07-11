@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { usePostsData } from "@/hooks";
+import { usePostsData } from "@/features/posts/hooks";
 
 export const usePostCreateForm = () => {
   const { createPost } = usePostsData();

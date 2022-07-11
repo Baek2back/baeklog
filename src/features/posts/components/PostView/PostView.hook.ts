@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { usePostsData } from "@/hooks";
+import { usePostsData } from "@/features/posts/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBoolean } from "@/shared/hooks";
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { usePostsData } from "@/hooks";
+import { usePostsData } from "@/features/posts/hooks";
 
 export const usePostsView = () => {
   const { postsLoading, posts, getAllPosts } = usePostsData();
