@@ -1,10 +1,9 @@
 import { ClipLoader } from "react-spinners";
-import * as S from "./Spinner.style";
 
 export const Spinner = () => {
   return (
-    <S.Spinner>
+    <div className="flex h-full w-full items-center justify-center">
       <ClipLoader color="#38d9a9" />
-    </S.Spinner>
+    </div>
   );
 };

@@ -1,5 +1,4 @@
 import { useContentTextarea } from "./ContentTextarea.hook";
-import * as S from "./ContentTextarea.style";
 
 interface ContentTextareaProps
   extends React.DetailedHTMLProps<
@@ -10,10 +9,11 @@ interface ContentTextareaProps
 export const ContentTextarea = (props: ContentTextareaProps) => {
   const { textareaRef, handleResizeHeight } = useContentTextarea();
   return (
-    <S.ContentTextarea
+    <textarea
       {...props}
       onInput={handleResizeHeight}
       ref={textareaRef}
+      className="w-full resize-none rounded border border-[#dee2e6] p-3"
     />
   );
 };

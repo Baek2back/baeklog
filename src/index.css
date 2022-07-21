@@ -1,0 +1,10 @@
+@tailwind base;
+
+@layer base {
+  body {
+    background: #e9ecef;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;

@@ -1,5 +1,3 @@
-import * as S from "./TitleInput.style";
-
 interface TitleInputPros
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -7,5 +5,10 @@ interface TitleInputPros
   > {}
 
 export const TitleInput = (props: TitleInputPros) => {
-  return <S.TitleInput {...props} />;
+  return (
+    <input
+      {...props}
+      className="w-full rounded border border-[#dee2e6] p-3 text-base outline-none"
+    />
+  );
 };

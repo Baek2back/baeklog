@@ -1,9 +1,10 @@
+import { isEmpty } from "@/shared/utils/assertion";
 import { useCallback, useEffect, useState } from "react";
 import { usePostsData } from "@/features/posts/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBoolean } from "@/shared/hooks";
 
-export const usePostView = () => {
+export const usePostPage = () => {
   const [isEditStatus, { toggle: toggleEditStatus }] = useBoolean(false);
   const { postLoading, post, getPostById, deletePost, editPost } =
     usePostsData();
@@ -25,6 +26,12 @@ export const usePostView = () => {
     []
   );
 
+  const handleCancelButtonClick = useCallback(() => {
+    setTitle(post.title);
+    setContent(post.content);
+    toggleEditStatus();
+  }, [post.title, post.content, toggleEditStatus]);
+
   const { postId } = useParams();
 
   const navigate = useNavigate();
@@ -41,6 +48,12 @@ export const usePostView = () => {
     if (!postId) return;
     getPostById({ id: postId });
   }, [getPostById, postId]);
+
+  useEffect(() => {
+    if (isEmpty(post)) return;
+    setTitle(post.title);
+    setContent(post.content);
+  }, [post]);
 
   const handleDeleteButtonClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,15 +76,15 @@ export const usePostView = () => {
             content
           }
         },
-        {
-          onSuccess: () => {
-            toggleEditStatus();
-          }
-        }
+        toggleEditStatus
       );
     },
     [title, content, postId, editPost, toggleEditStatus]
   );
+
+  const handleEditButtonClick = useCallback(() => {
+    toggleEditStatus();
+  }, [toggleEditStatus]);
 
   return {
     isEditStatus,
@@ -81,6 +94,8 @@ export const usePostView = () => {
     handleSaveButtonClick,
     handleTitleChange,
     handleContentChange,
+    handleCancelButtonClick,
+    handleEditButtonClick,
     postLoading,
     post,
     title,

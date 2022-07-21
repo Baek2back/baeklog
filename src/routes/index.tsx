@@ -1,20 +1,23 @@
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  BrowserRouter as Router
+} from "react-router-dom";
 import { PostsRoutes } from "@/routes/posts";
-import { AppLayout } from "@/components/layout";
-import { HistoryRouter as Router } from "redux-first-history/rr6";
-import { history } from "@/store";
 
 const App = () => {
   return (
-    <AppLayout>
+    <div className="relative mx-auto my-24 flex h-[768px] w-[512px] flex-col rounded-2xl bg-white shadow-lg">
       <Outlet />
-    </AppLayout>
+    </div>
   );
 };
 
 export const AppRoutes = () => {
   return (
-    <Router history={history}>
+    <Router>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Navigate to="posts" replace={true} />} />
