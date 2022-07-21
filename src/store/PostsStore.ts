@@ -7,7 +7,7 @@ import type {
 import type { Post } from "@/generated";
 import { PostsApi } from "@/generated";
 import { postsApi } from "@/features/posts/remotes/api";
-import { makeAutoObservable } from "mobx";
+import { flow, makeObservable, observable } from "mobx";
 
 type PostsState = {
   posts: {
@@ -38,8 +38,15 @@ class PostsStore {
   };
 
   constructor(postsApi: PostsApi) {
+    makeObservable(this, {
+      state: observable,
+      createPost: flow,
+      deletePostById: flow,
+      editPostById: flow,
+      getAllPosts: flow,
+      getPostById: flow
+    });
     this.api = postsApi;
-    makeAutoObservable(this);
   }
 
   *getAllPosts() {

@@ -9,6 +9,17 @@ const PostsStoreContext = createContext(postsStore);
 export const usePostsData = () => {
   const navigate = useNavigate();
   const postsStore = useContext(PostsStoreContext);
+  const {
+    loading: postsLoading,
+    data: posts,
+    error: postsError
+  } = postsStore.state.posts;
+
+  const {
+    loading: postLoading,
+    data: post,
+    error: postError
+  } = postsStore.state.post;
 
   const getAllPosts = useCallback(() => {
     postsStore.getAllPosts();
@@ -46,12 +57,12 @@ export const usePostsData = () => {
   );
 
   return {
-    postsLoading: postsStore.state.posts.loading,
-    posts: postsStore.state.posts.data,
-    postsError: postsStore.state.posts.error,
-    postLoading: postsStore.state.post.loading,
-    post: postsStore.state.post.data,
-    postError: postsStore.state.post.error,
+    postsLoading,
+    posts,
+    postsError,
+    postLoading,
+    post,
+    postError,
     getAllPosts,
     deletePost,
     getPostById,
