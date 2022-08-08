@@ -1,46 +1,52 @@
-import { useCallback, useState } from "react";
+import { useRouter } from "next/router";
+
 import { usePostsData } from "@/features/posts/hooks";
+import type { Post } from "@/generated/models";
+import { useForm } from "@/shared/hooks";
 
 export const usePostCreateForm = () => {
+  const router = useRouter();
   const { createPost } = usePostsData();
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const handleTitleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTitle(event.target.value);
+  const {
+    values: { title, content },
+    handleChange,
+    handleSubmit
+  } = useForm<Post>({
+    initialValues: {
+      title: "",
+      content: ""
     },
-    []
-  );
-
-  const handleContentChange = useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setContent(event.target.value);
-    },
-    []
-  );
-
-  const handlePostCreateFormSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      createPost({
-        createPostDto: {
-          title,
-          content
+    onSubmit: () => {
+      createPost(
+        {
+          createPostDto: {
+            title,
+            content
+          }
+        },
+        {
+          onSuccess: (id: string) =>
+            router.push({
+              pathname: "/posts/[postId]",
+              query: {
+                postId: id
+              }
+            })
         }
-      });
-      setTitle("");
-      setContent("");
-    },
-    [createPost, title, content]
-  );
+      );
+    }
+  });
+
+  const handleTitleChange = handleChange("title");
+
+  const handleContentChange = handleChange("content");
 
   return {
     title,
-    handleTitleChange,
     content,
+    handleTitleChange,
     handleContentChange,
-    handlePostCreateFormSubmit
+    handleSubmit
   };
 };

@@ -1,4 +1,4 @@
-export * from "./TitleInput";
 export * from "./IconButton";
-export * from "./ContentTextarea";
+export * from "./Input";
 export * from "./Spinner";
+export * from "./Textarea";

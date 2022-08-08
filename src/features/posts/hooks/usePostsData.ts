@@ -1,59 +1,87 @@
-import { postsStore } from "@/store";
+import { useCallback } from "react";
 
-import { createContext, useCallback, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import type { First } from "@/shared/utils/types";
-
-const PostsStoreContext = createContext(postsStore);
+import {
+  postsAsyncActions,
+  postSelector,
+  postsSelector
+} from "@/features/posts/store";
+import {
+  PostsApiCreateRequest,
+  PostsApiFindOneRequest,
+  PostsApiRemoveRequest,
+  PostsApiUpdateRequest
+} from "@/generated/api/posts-api";
+import { useAppDispatch, useAppSelector } from "@/store";
 
 export const usePostsData = () => {
-  const navigate = useNavigate();
-  const postsStore = useContext(PostsStoreContext);
   const {
     loading: postsLoading,
     data: posts,
     error: postsError
-  } = postsStore.state.posts;
+  } = useAppSelector(postsSelector);
 
   const {
     loading: postLoading,
     data: post,
     error: postError
-  } = postsStore.state.post;
+  } = useAppSelector(postSelector);
+
+  const dispatch = useAppDispatch();
 
   const getAllPosts = useCallback(() => {
-    postsStore.getAllPosts();
-  }, [postsStore]);
+    dispatch(postsAsyncActions.getAllPosts.request({}));
+  }, [dispatch]);
 
   const deletePost = useCallback(
-    (request: First<Parameters<typeof postsStore.deletePostById>>) => {
-      postsStore.deletePostById(request, navigate);
+    (
+      postsApiRemoveRequest: PostsApiRemoveRequest,
+      { onSuccess }: { onSuccess: () => void }
+    ) => {
+      dispatch(
+        postsAsyncActions.deletePostById.request({
+          ...postsApiRemoveRequest,
+          onSuccess
+        })
+      );
     },
-    [postsStore, navigate]
+    [dispatch]
   );
 
   const getPostById = useCallback(
-    (request: First<Parameters<typeof postsStore.getPostById>>) => {
-      postsStore.getPostById(request);
+    (postsApiFindOneRequest: PostsApiFindOneRequest) => {
+      dispatch(postsAsyncActions.getPostById.request(postsApiFindOneRequest));
     },
-    [postsStore]
+    [dispatch]
   );
 
   const createPost = useCallback(
-    (request: First<Parameters<typeof postsStore.createPost>>) => {
-      postsStore.createPost(request, navigate);
+    (
+      postApiCreateRequest: PostsApiCreateRequest,
+      { onSuccess }: { onSuccess: (id: string) => void }
+    ) => {
+      dispatch(
+        postsAsyncActions.createPost.request({
+          ...postApiCreateRequest,
+          onSuccess
+        })
+      );
     },
-    [postsStore, navigate]
+    [dispatch]
   );
 
   const editPost = useCallback(
     (
-      request: First<Parameters<typeof postsStore.editPostById>>,
-      onSuccess: () => void
+      postsApiUpdateRequest: PostsApiUpdateRequest,
+      { onSuccess }: { onSuccess: () => void }
     ) => {
-      postsStore.editPostById(request, onSuccess);
+      dispatch(
+        postsAsyncActions.editPost.request({
+          ...postsApiUpdateRequest,
+          onSuccess
+        })
+      );
     },
-    [postsStore]
+    [dispatch]
   );
 
   return {
@@ -64,9 +92,9 @@ export const usePostsData = () => {
     post,
     postError,
     getAllPosts,
-    deletePost,
-    getPostById,
     createPost,
-    editPost
+    editPost,
+    getPostById,
+    deletePost
   };
 };

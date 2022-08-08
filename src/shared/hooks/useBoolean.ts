@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 type InitialState = boolean | (() => boolean);
 
-export function useBoolean(initialState: InitialState = false) {
+export const useBoolean = (initialState: InitialState = false) => {
   const [value, setValue] = useState(initialState);
 
   const callbacks = useMemo(
@@ -15,4 +15,4 @@ export function useBoolean(initialState: InitialState = false) {
   );
 
   return [value, callbacks] as const;
-}
+};
