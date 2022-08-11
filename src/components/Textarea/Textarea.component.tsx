@@ -2,11 +2,7 @@ import { clsxm } from "@/lib";
 
 import { useTextarea } from "./Textarea.hook";
 
-interface TextareaProps
-  extends React.DetailedHTMLProps<
-    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    HTMLTextAreaElement
-  > {}
+interface TextareaProps extends React.ComponentPropsWithoutRef<"textarea"> {}
 
 export const Textarea = (props: TextareaProps) => {
   const { textareaRef, handleResizeHeight } = useTextarea();

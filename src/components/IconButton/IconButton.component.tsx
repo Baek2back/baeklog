@@ -1,7 +1,6 @@
 import { clsxm } from "@/lib";
 
-interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   icon: React.ReactNode;
 }
 

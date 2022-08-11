@@ -1,10 +1,6 @@
 import { clsxm } from "@/lib";
 
-interface InputPros
-  extends React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {}
+interface InputPros extends React.ComponentPropsWithoutRef<"input"> {}
 
 export const Input = (props: InputPros) => {
   return (
