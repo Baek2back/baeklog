@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { MdArrowForwardIos } from "react-icons/md";
 
 import type { Post } from "@/generated/models";
 import { clsxm } from "@/lib";
+import { NextLink } from "@/shared/components";
 
 interface PostItemProps extends Post {}
 
@@ -17,17 +17,15 @@ export const PostItem = ({ id, title, content }: PostItemProps) => {
         <h2 className={clsxm("text-2xl text-[#495057]")}>{title}</h2>
         <p className={clsxm("text-base")}>{content}</p>
       </div>
-      <Link href={`/posts/${id}`} passHref>
-        <a>
-          <button
-            className={clsxm(
-              "hidden h-6 w-6 items-center justify-between hover:text-[#ff6b6b] group-hover:flex"
-            )}
-          >
-            <MdArrowForwardIos />
-          </button>
-        </a>
-      </Link>
+      <NextLink href={`/posts/${id}`} passHref>
+        <button
+          className={clsxm(
+            "hidden h-6 w-6 items-center justify-between hover:text-[#ff6b6b] group-hover:flex"
+          )}
+        >
+          <MdArrowForwardIos />
+        </button>
+      </NextLink>
     </li>
   );
 };

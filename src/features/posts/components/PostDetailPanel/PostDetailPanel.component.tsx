@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { MdClose } from "react-icons/md";
 
 import { IconButton } from "@/components";
 import { clsxm } from "@/lib";
+import { NextLink } from "@/shared/components";
 
 import { usePostDetailPanel } from "./PostDetailPanel.hook";
 
@@ -22,11 +22,9 @@ export const PostDetailPanel = ({ toggleEditStatus }: PostDetailPanelProps) => {
         <h1 className={clsxm("truncate text-4xl text-[#343a40]")}>
           {post.title}
         </h1>
-        <Link href={"/posts"} passHref>
-          <a>
-            <IconButton icon={<MdClose />} />
-          </a>
-        </Link>
+        <NextLink href={"/posts"} passHref>
+          <IconButton icon={<MdClose />} />
+        </NextLink>
       </header>
       <main className={clsxm("overflow-y-auto px-8 py-5")}>
         <p>{post.content}</p>
